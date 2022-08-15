@@ -1,0 +1,90 @@
+using namespace std;
+#include<bits/stdc++.h>
+
+class Stack{
+	queue<int> que1,que2;
+	int currentSize;
+	public:
+		Stack(){
+			currentSize = 0;
+		}
+		void pop(){
+			if(que1.empty())
+			return;
+			
+			while(que1.size()!=1){
+				que2.push(que1.front());
+				que1.pop();
+			}
+			
+			que1.pop();
+			
+			currentSize--;
+			
+			queue<int> que=que1;
+			que1 = que2;
+			que2 =que;
+		}
+		
+		void push(int x){
+			que1.push(x);
+			
+			currentSize++;
+		}
+		int top(){
+			if(que1.empty())
+			return -1;
+			
+			while(que1.size()!=1){
+				que2.push(que1.front());
+				que1.pop();
+			}
+			
+			int temp = que1.front();
+			
+			que1.pop();
+			
+			que2.push(temp);
+			
+			queue<int> que =que1 ;
+			
+			que1 = que2;
+			
+			que2 = que;
+			
+			return temp;
+		}
+		int size(){
+			return currentSize;
+		}
+};
+
+int main(){
+	Stack stack;
+	int a,b;
+	
+	cout<<"Enter number of elements to be pushed: ";
+	
+	cin>>b;
+	
+	cout<<"\nEnter number of elements to be pushed in stack:";
+	
+	for( int i=0; i<b ; i++){
+		
+		cin>>a;
+		
+		stack.push(a);
+	}
+	
+	cout<<"\nCurrent Size : " <<stack.size() ;
+
+	cout<<"\nTop element : "<< stack.top();
+	stack.pop();
+	
+	cout<<"\nTop element : "<<stack.top();
+	stack.pop();
+	
+	cout<<"\nTop Element : "<<stack.top();
+	
+	cout<<"\nCurrent size after two pop operations : "<<stack.size();
+}	
